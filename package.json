@@ -15,6 +15,7 @@
     "smooch-bot": "^1.0.1",
     "smooch-core": "^2.0.0",
     "janis":"0.0.14",
+    "request-promise": "^3.0.0",
     "dotenv":""
   },
   "devDependencies": {

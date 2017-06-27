@@ -9,6 +9,8 @@ const app = require('../app');
 const script = require('../script');
 const SmoochCore = require('smooch-core');
 const jwt = require('../jwt');
+var rp = require('request-promise');
+
 
 const name = 'SmoochBot';
 const avatarUrl = 'https://s.gravatar.com/avatar/f91b04087e0125153623a3778e819c0a?s=80';
