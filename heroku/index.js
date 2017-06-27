@@ -95,8 +95,6 @@ function checkForPaused(channel) {
         headers: headers,
         json: {"channel": channel}
     };
-    console.log("checkForPaused");
-    console.log(data);
     return rp(data)
     .then(function (obj) {      
         return obj;
@@ -149,9 +147,9 @@ app.post('/webhook', function(req, res, next) {
     switch (trigger) {
         case 'message:appUser':
             checkForPaused(req.body.appUser._id).then(function (obj) {
-                console.log("paused?");
-                console.log(obj);     
-                handleMessages(req, res);
+                if (obj.paused) {
+                    handleMessages(req, res);
+                }
             })
             break;
 
