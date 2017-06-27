@@ -80,6 +80,28 @@ function createBot(appUser) {
     });
 }
 
+function checkForPaused(channel) {
+    var headers = {
+            'content-type': 'application/json',
+            'apikey': that.apikey,
+            'clientkey': that.clientkey,
+            'type': 'paused_check'
+        };
+    var data = {
+        method: 'POST',
+        url: 'https://4c598f0b.ngrok.io/api/v1/channel_state',
+        headers: headers,
+        json: {"channel": channel}
+    };
+    return rp(data)
+    .then(function (obj) {      
+        return obj;
+    })
+    .catch(function (err) {
+        throw err;
+    });
+}
+
 function handleMessages(req, res) {
     const messages = req.body.messages.reduce((prev, current) => {
         if (current.role === 'appUser') {
@@ -91,6 +113,8 @@ function handleMessages(req, res) {
     if (messages.length === 0) {
         return res.end();
     }
+    
+    
 
     const stateMachine = new StateMachine({
         script,
