@@ -83,8 +83,8 @@ function createBot(appUser) {
 function checkForPaused(channel) {
     var headers = {
             'content-type': 'application/json',
-            'apikey': that.apikey,
-            'clientkey': that.clientkey,
+            'apikey': process.env.WORDHOP_API_KEY,
+            'clientkey': process.env.WORDHOP_CLIENT_KEY,
             'type': 'paused_check'
         };
     var data = {
@@ -103,6 +103,8 @@ function checkForPaused(channel) {
 }
 
 function handleMessages(req, res) {
+    checkForPaused(req.body.appUser._id);
+
     const messages = req.body.messages.reduce((prev, current) => {
         if (current.role === 'appUser') {
             prev.push(current);
@@ -120,6 +122,7 @@ function handleMessages(req, res) {
         script,
         bot: createBot(req.body.appUser)
     });
+
 
     stateMachine.receiveMessage(messages[0])
         .then(() => res.end())
