@@ -13,7 +13,9 @@
     "hbs": "^4.0.0",
     "jsonwebtoken": "^5.7.0",
     "smooch-bot": "^1.0.1",
-    "smooch-core": "^2.0.0"
+    "smooch-core": "^2.0.0",
+    "janis":"0.0.14",
+    "dotenv":""
   },
   "devDependencies": {
     "gulp": "^3.9.1",
