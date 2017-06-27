@@ -107,8 +107,7 @@ function checkForPaused(channel) {
 }
 
 function handleMessages(req, res) {
-    checkForPaused(req.body.appUser._id);
-
+    
     const messages = req.body.messages.reduce((prev, current) => {
         if (current.role === 'appUser') {
             prev.push(current);
@@ -119,14 +118,11 @@ function handleMessages(req, res) {
     if (messages.length === 0) {
         return res.end();
     }
-    
-    
 
     const stateMachine = new StateMachine({
         script,
         bot: createBot(req.body.appUser)
     });
-
 
     stateMachine.receiveMessage(messages[0])
         .then(() => res.end())
@@ -152,7 +148,11 @@ app.post('/webhook', function(req, res, next) {
 
     switch (trigger) {
         case 'message:appUser':
-            handleMessages(req, res);
+            checkForPaused(req.body.appUser._id).then(function (obj) {
+                console.log("paused?");
+                console.log(obj);     
+                handleMessages(req, res);
+            })
             break;
 
         case 'postback':
