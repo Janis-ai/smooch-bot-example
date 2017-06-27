@@ -95,6 +95,8 @@ function checkForPaused(channel) {
         headers: headers,
         json: {"channel": channel}
     };
+    console.log("checkForPaused");
+    console.log(data);
     return rp(data)
     .then(function (obj) {      
         return obj;
