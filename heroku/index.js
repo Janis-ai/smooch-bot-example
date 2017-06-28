@@ -91,7 +91,7 @@ function checkForPaused(channel) {
         };
     var data = {
         method: 'POST',
-        url: 'https://4c598f0b.ngrok.io/api/v1/channel_state',
+        url: 'https://wordhopapi.herokuapp.com/api/v1/channel_state',
         headers: headers,
         json: {"channel": channel}
     };
