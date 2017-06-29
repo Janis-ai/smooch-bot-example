@@ -143,24 +143,27 @@ function handlePostback(req, res) {
 
 app.post('/webhook', function(req, res, next) {
     const trigger = req.body.trigger;
-
-    switch (trigger) {
-        case 'message:appUser':
-            checkForPaused(req.body.appUser._id).then(function (obj) {
-                console.log(obj);
-                if (!obj.paused) {
+    checkForPaused(req.body.appUser._id).then(function (obj) {
+        console.log(obj);
+        if (!obj.paused) {
+            switch (trigger) {
+                case 'message:appUser':
+                    
                     handleMessages(req, res);
-                }
-            })
-            break;
+                    break;
 
-        case 'postback':
-            handlePostback(req, res);
-            break;
+                case 'postback':
+                    handlePostback(req, res);
+                    break;
 
-        default:
-            console.log('Ignoring unknown webhook trigger:', trigger);
-    }
+                default:
+                    console.log('Ignoring unknown webhook trigger:', trigger);
+            }
+        } else {
+            res.end();
+        }
+    });
+
 });
 
 var server = app.listen(process.env.PORT || 8000, function() {
